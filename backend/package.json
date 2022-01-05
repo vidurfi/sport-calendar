@@ -1,0 +1,18 @@
+{
+  "name": "sport-calendar",
+  "version": "1.0.0",
+  "description": "Backend for coding exercise for Sportradar Coding Academy",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Adam Szep",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "moment": "^2.29.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.12.5"
+  }
+}
