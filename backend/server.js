@@ -1,7 +1,5 @@
-import moment from 'moment';
 import mysql2 from 'mysql2';
 import express from 'express';
-import sequelize from 'sequelize';
 import cors from 'cors';
 
 let matches;
@@ -30,9 +28,15 @@ app.get('/', (req, res) => {
   res.status(200).end();
 });
 
-app.post('/getMatchForDay', (req, res) => {
-  matches.foreach()
-  res.status(200).send(req.body);
+app.post('/getMatchForMonth', (req, res) => {
+  let responseArray = [];
+  let currentDate = new Date(req.body.year, req.body.month, 1);
+  matches.forEach(element => {
+    if ((element.DATE.getMonth() == currentDate.getMonth()) && (element.DATE.getYear() == currentDate.getYear())) {
+      responseArray.push(element);
+    }
+  })
+  res.status(200).send(responseArray);
 });
 
 app.listen(port, () => {

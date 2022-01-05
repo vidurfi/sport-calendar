@@ -1,8 +1,8 @@
-//import axios from '../node_modules/axios';
-
 let currentYear = 2022;
 let currentMonth = 1;
-let currentDay = 1;
+let currentDay = 8;
+
+let matchesInCurrentMonth = [];
 
 const FIRSTCELL = 1;
 const LASTCELL = 42;
@@ -60,10 +60,10 @@ function clearStyle() {
 }
 
 async function getFilter() {
+  let matchesInCurrentMonth = [];
   const json = {
     "year": currentYear,
     "month": currentMonth,
-    "day": currentDay
   };
   const options = {
     method: 'POST',
@@ -72,7 +72,7 @@ async function getFilter() {
       'Content-Type':'application/json'
     }
   }
-  fetch('http://localhost:3000/getMatchForDay', options)
+  fetch('http://localhost:3000/getMatchForMonth', options)
     .then(res => res.json())
     .then(res => console.log(res))
     .catch(err => console.error(err));
