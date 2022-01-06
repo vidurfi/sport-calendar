@@ -5,7 +5,7 @@ const config = {
     "password": "root",
     "database": "sport_calendar"
   },
-  "backendPort":3000
+  "backendPort":5002
 }
 
 export default config;
