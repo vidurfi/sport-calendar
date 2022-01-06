@@ -7,44 +7,49 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-let matches;
-
-let connectionJson = {
+const connectionJson = {
   host: 'localhost',
   user: 'root',
   password: 'root',
   database: 'sport_calendar'
 }
 
-
-
 app.get('/', (req, res) => {
   res.status(200).end();
 });
 
 app.post('/getMatchForMonth', async (req, res) => {
-  let connection = await mysql2.createConnection(connectionJson);
-  let sql = "SELECT * FROM match_view "
-  if ('filters' in req.body) {
-    sql += "WHERE ";
-    let conditions = []
-    if ('city' in req.body.filters) conditions.push("CITY='" + req.body.filters.city + "' ");
-    if ('sport' in req.body.filters) conditions.push("SPORT='" + req.body.filters.sport + "' ");
-    if ('team' in req.body.filters) conditions.push("HOME_TEAM='" + req.body.filters.team + "' OR AWAY_TEAM='" + req.body.filters.team + "'");
-    sql += conditions.join('AND ');
-  }
-  sql += ";";
-  matches = await connection.execute(sql);
-  let responseArray = [];
-  let currentDate = new Date(req.body.year, req.body.month, 1);
-  matches[0].forEach(element => {
+  const matches = await getFilteredMatches(req.body);
+  const responseArray = [];
+  const currentDate = new Date(req.body.year, req.body.month, 1);
+  matches.forEach(element => {
     if ((element.DATE.getMonth() == currentDate.getMonth()) && (element.DATE.getYear() == currentDate.getYear())) {
       responseArray.push(element);
     }
   })
-  await connection.end();
   res.status(200).send(responseArray);
 });
+
+async function getFilteredMatches(body) {
+  const connection = await mysql2.createConnection(connectionJson);
+  const matches = await connection.execute(buildQuery(body));
+  await connection.end();
+  return matches[0];
+}
+
+function buildQuery(body) {
+  let sql = "SELECT * FROM match_view "
+  if ('filters' in body) {
+    sql += "WHERE ";
+    const conditions = []
+    if ('city' in body.filters) conditions.push("CITY='" + body.filters.city + "' ");
+    if ('sport' in body.filters) conditions.push("SPORT='" + body.filters.sport + "' ");
+    if ('team' in body.filters) conditions.push("(HOME_TEAM='" + body.filters.team + "' OR AWAY_TEAM='" + body.filters.team + "')");
+    sql += conditions.join('AND ');
+  }
+  sql += ";";
+  return sql;
+}
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}...`);
