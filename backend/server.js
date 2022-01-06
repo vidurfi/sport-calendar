@@ -1,18 +1,14 @@
 import mysql2 from 'mysql2/promise';
 import express from 'express';
 import cors from 'cors';
+import config from './config.js';
 
 const app = express();
-const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-const connectionJson = {
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'sport_calendar'
-}
+const connectionJson = config.connectionJson;
+const port = config.backendPort;
 
 app.get('/', (req, res) => {
   res.status(200).end();
