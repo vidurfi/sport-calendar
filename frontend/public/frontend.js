@@ -1,23 +1,24 @@
 let currentYear = 2022;
 let currentMonth = 1;
 let currentDay = 8;
+let firstDayId;
 
 let matchesInCurrentMonth = [];
 
 const FIRSTCELL = 1;
 const LASTCELL = 42;
 
-function incrementMonth() {
+async function incrementMonth() {
   if (currentMonth == 12) {
     currentYear++;
     currentMonth = 1;
   }
   else currentMonth++;
   changeText();
-  updateCalendar();
+  await updateCalendar();
 }
 
-function decrementMonth(){
+async function decrementMonth(){
   if (currentMonth == 1) {
     currentYear--;
     currentMonth = 12;
@@ -32,10 +33,16 @@ function changeText() {
   document.querySelector('.year').innerHTML = currentYear;
 }
 
-function updateCalendar() {
+async function updateCalendar() {
+  setFirstDayId();
   clearStyle();
+  clearMatches();
   styleCalendar();
-  updateMatches();
+  await updateMatches();
+}
+
+function setFirstDayId() {
+  firstDayId = new Date(currentYear, currentMonth - 1, 1).getDay() || 7;
 }
 
 function getCurrentfirstActiveDays() {
@@ -59,11 +66,26 @@ function clearStyle() {
   }
 }
 
-async function getFilter() {
-  let matchesInCurrentMonth = [];
+function clearMatches() {
+  document.querySelectorAll('.matchday').forEach(element => element.remove());
+}
+
+async function getMatches() {
+  let matchesInCurrentMonth = await getMatchesInCurrentMonth();
+  let div;
+  matchesInCurrentMonth.forEach(element => {
+    div = document.createElement("div");
+    div.classList.add("matchday");
+    date = new Date(element.DATE);
+    div.innerHTML = (`${date.getHours()}:${(date.getMinutes()<10?'0':'')+date.getMinutes()} : ${element.HOME_TEAM} - ${element.AWAY_TEAM} at ${element.CITY}`);
+    document.getElementById(firstDayId + date.getDate()).appendChild(div);
+  });
+}
+
+async function getMatchesInCurrentMonth() {
   const json = {
     "year": currentYear,
-    "month": currentMonth,
+    "month": currentMonth-1,
   };
   const options = {
     method: 'POST',
@@ -72,22 +94,18 @@ async function getFilter() {
       'Content-Type':'application/json'
     }
   }
-  fetch('http://localhost:3000/getMatchForMonth', options)
-    .then(res => res.json())
-    .then(res => console.log(res))
+  let matchesInCurrentMonth = await fetch('http://localhost:3000/getMatchForMonth', options)
+    .then((res) => { return res.json(); })
     .catch(err => console.error(err));
-
-  /*let div;
-  for (let i = getCurrentfirstActiveDays(); i < (new Date(currentYear, currentMonth, 0).getDate()) + getCurrentfirstActiveDays(); i++) {
-    let element = document.getElementById(`${i}`);
-    div = document.createElement('div');
-    div.id = 'match-day';
-    div.innerHTML = 'MATCH';
-    element.appendChild(div);
-  }*/
+  return matchesInCurrentMonth;
 }
 
-function updateMatches() {
+function getFilter() {
+  
+}
+
+async function updateMatches() {
   getFilter();
+  await getMatches();
 }
 
