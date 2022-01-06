@@ -4,8 +4,6 @@ let currentDay = 8;
 let firstDayId;
 let filters = {};
 
-let matchesInCurrentMonth = [];
-
 const FIRSTCELL = 1;
 const LASTCELL = 42;
 
@@ -78,7 +76,7 @@ async function getMatches() {
     div = document.createElement("div");
     div.classList.add("matchday");
     date = new Date(element.DATE);
-    div.innerHTML = (`${date.getHours()}:${(date.getMinutes()<10?'0':'')+date.getMinutes()} : ${element.HOME_TEAM} - ${element.AWAY_TEAM} at ${element.STADIUM}, ${element.CITY}`);
+    div.innerHTML = (`${date.getHours()}:${(date.getMinutes()<10?'0':'')+date.getMinutes()} : ${element.SPORT} match: ${element.HOME_TEAM} - ${element.AWAY_TEAM} at ${element.STADIUM}, ${element.CITY}`);
     document.getElementById(firstDayId + date.getDate()).appendChild(div);
   });
 }
