@@ -1,5 +1,3 @@
-import { createServer } from 'http';
-import { readFileSync } from 'fs';
 import express from 'express';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
