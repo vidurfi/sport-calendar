@@ -1,5 +1,5 @@
 const config = {
-  "frontendPort":8000
+  "frontendPort":5001
 }
 
 export default config;

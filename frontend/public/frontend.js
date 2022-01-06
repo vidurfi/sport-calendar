@@ -4,6 +4,8 @@ let currentDay = 8;
 let firstDayId;
 let filters = {};
 
+const backendPort = 5002;
+
 const FIRSTCELL = 1;
 const LASTCELL = 42;
 
@@ -96,7 +98,7 @@ async function getMatchesInCurrentMonth() {
       'Content-Type':'application/json'
     }
   }
-  let matchesInCurrentMonth = await fetch('http://localhost:3000/getMatchForMonth', options)
+  let matchesInCurrentMonth = await fetch(`http://localhost:${backendPort}/getMatchForMonth`, options)
     .then((res) => { return res.json(); })
     .catch(err => console.error(err));
   return matchesInCurrentMonth;
