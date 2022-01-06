@@ -2,6 +2,7 @@ let currentYear = 2022;
 let currentMonth = 1;
 let currentDay = 8;
 let firstDayId;
+let filters = {};
 
 let matchesInCurrentMonth = [];
 
@@ -38,7 +39,7 @@ async function updateCalendar() {
   clearStyle();
   clearMatches();
   styleCalendar();
-  await updateMatches();
+  await getMatches();
 }
 
 function setFirstDayId() {
@@ -77,7 +78,7 @@ async function getMatches() {
     div = document.createElement("div");
     div.classList.add("matchday");
     date = new Date(element.DATE);
-    div.innerHTML = (`${date.getHours()}:${(date.getMinutes()<10?'0':'')+date.getMinutes()} : ${element.HOME_TEAM} - ${element.AWAY_TEAM} at ${element.CITY}`);
+    div.innerHTML = (`${date.getHours()}:${(date.getMinutes()<10?'0':'')+date.getMinutes()} : ${element.HOME_TEAM} - ${element.AWAY_TEAM} at ${element.STADIUM}, ${element.CITY}`);
     document.getElementById(firstDayId + date.getDate()).appendChild(div);
   });
 }
@@ -85,8 +86,11 @@ async function getMatches() {
 async function getMatchesInCurrentMonth() {
   const json = {
     "year": currentYear,
-    "month": currentMonth-1,
+    "month": currentMonth - 1,
   };
+  if (Object.keys(filters).length !== 0) {
+    json.filters = filters;
+  }
   const options = {
     method: 'POST',
     body: JSON.stringify(json),
@@ -100,12 +104,10 @@ async function getMatchesInCurrentMonth() {
   return matchesInCurrentMonth;
 }
 
-function getFilter() {
-  
+async function setFilters() {
+  filters = {};
+  if (document.getElementById("cityFilterInput").value) filters.city = document.getElementById("cityFilterInput").value;
+  if (document.getElementById("sportFilterInput").value) filters.sport = document.getElementById("sportFilterInput").value;
+  if (document.getElementById("teamFilterInput").value) filters.team = document.getElementById("teamFilterInput").value;
+  await updateCalendar();
 }
-
-async function updateMatches() {
-  getFilter();
-  await getMatches();
-}
-

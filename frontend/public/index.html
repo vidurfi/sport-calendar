@@ -5,12 +5,33 @@
 <script src="frontend.js"></script>
 <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body onload="setFilters()">
   <div>
-    <div class="content title">SportCalendar</div>
-    <div class="content subtitle year">2022</div>
+    <div>
+      <div class="content title">SportCalendar</div>
+      <div class="content subtitle year">2022</div>
+      <div class="content">
+        <button onclick="decrementMonth()"><</button>
+        <div class="subtitle inline month">1</div>
+        <button onclick="incrementMonth()">></button>
+      </div>
+    </div>
     <div class="content">
-      <button onclick="decrementMonth()"><</button><div class="subtitle inline month">1</div><button onclick="incrementMonth()">></button>
+      <div class="content filtercontrols inline">
+        <div class="inline">
+          City
+          <input id="cityFilterInput" class="inline" type="text"/>
+        </div>
+        <div class="inline">
+          Sport
+          <input id="sportFilterInput" type="text"/>
+        </div>
+        <div class="inline">
+          Team
+          <input id="teamFilterInput" type="text"/>
+        </div>
+        <button onclick="setFilters()">Set filters</button>
+      </div>
     </div>
     <table id="calendar" class="calendar">
       <tr>
