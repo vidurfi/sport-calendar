@@ -84,7 +84,7 @@ async function getMatches() {
 async function getMatchesInCurrentMonth() {
   const json = {
     "year": currentYear,
-    "month": currentMonth - 1,
+    "month": currentMonth,
   };
   if (Object.keys(filters).length !== 0) {
     json.filters = filters;

@@ -19,7 +19,7 @@ app.post('/getMatchForMonth', async (req, res) => {
   const responseArray = [];
   const currentDate = new Date(req.body.year, req.body.month, 1);
   matches.forEach(element => {
-    if ((element.DATE.getMonth() == currentDate.getMonth()) && (element.DATE.getYear() == currentDate.getYear())) {
+    if ((element.DATE.getMonth()+1 == currentDate.getMonth()) && (element.DATE.getYear() == currentDate.getYear())) {
       responseArray.push(element);
     }
   })
