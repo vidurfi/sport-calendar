@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const connectionJson = config.connectionJson;
-const port = config.backendPort;
+const PORT = 5002;
 
 app.get('/', (req, res) => {
   res.status(200).end();
@@ -47,6 +47,6 @@ function buildQuery(body) {
   return sql;
 }
 
-app.listen(port, () => {
-  console.log(`App listening on port ${port}...`);
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}...`);
 });

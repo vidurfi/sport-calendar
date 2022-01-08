@@ -1,11 +1,10 @@
 const config = {
   "connectionJson": {
-    "host": "localhost",
+    "host": "sportcalendar-db",
     "user": "root",
     "password": "root",
     "database": "sport_calendar"
-  },
-  "backendPort":5002
+  }
 }
 
 export default config;
