@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+    sportcalendar-frontend:
+        image: garaf4587/calendar-frontend
+        expose: 
+            - "3000"
+        ports: 
+            - "5001:3000"
+        networks: 
+            - sportnetwork
+        stdin_open: true
+
+    sportcalendar-backend:
+        image: garaf4587/calendar-backend
+        expose: 
+            - "5002"
+        ports: 
+            - "5002:5002"
+        networks: 
+            - sportnetwork
+       
+    sportcalendar-db:
+        image: garaf4587/calendar-db
+        command: --character-set-server=utf8mb4
+        environment: 
+            MYSQL_ROOT_PASSWORD: root
+        networks: 
+            - sportnetwork
+
+
+networks:
+    sportnetwork:
+        driver: bridge
