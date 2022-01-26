@@ -7,28 +7,39 @@ import com.vidurfi.calendarbackend.team.Team;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "Match")
 @Table(name = "matches")
 public class Match {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "date")
     private LocalDateTime dateTime;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "_home_team_id")
     private Team homeTeam;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "_away_team_id")
     private Team awayTeam;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "_sport_id")
     private Sport sport;
-    @OneToOne
-    @JoinColumn(name = "_stadium_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "_stadium_id" )
     private Stadium stadium;
+
+    public void updateMatch(Match match){
+        this.dateTime = match.getDateTime();
+        this.homeTeam = match.getHomeTeam();
+        this.awayTeam = match.getAwayTeam();
+        this.sport = match.getSport();
+        this.stadium = match.getStadium();
+    }
+
+    public Match() {
+    }
 
     public Integer getId() {
         return id;

@@ -2,12 +2,12 @@ package com.vidurfi.calendarbackend.city;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "City")
 @Table(name = "cities")
 public class City {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
     @Column(name="city_name")

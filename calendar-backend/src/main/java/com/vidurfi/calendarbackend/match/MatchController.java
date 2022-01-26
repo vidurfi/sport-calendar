@@ -1,53 +1,42 @@
 package com.vidurfi.calendarbackend.match;
 
-import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Set;
-
-@Controller
+@RestController
 @RequestMapping(path = "/matches")
 public class MatchController {
 
     @Autowired
-    private MatchRepository matchRepository;
+    private MatchService matchService;
 
-    @PostMapping(path = "/add")
-    public @ResponseBody String addNewMatch (
-            @RequestParam LocalDateTime date,
-            @RequestParam String homeTeam,
-            @RequestParam String awayTeam,
-            @RequestParam String city,
-            @RequestParam String sport,
-            @RequestParam String stadium) {
-    //TODO: Create add logic operation
-    return "Match added";
+    @PostMapping(path = "/addMatch")
+    public Match addMatch (@RequestBody Match match) {
+        return matchService.addMatch(match);
+    }
+
+    @PostMapping(path = "/addMatches")
+    public @ResponseBody Iterable<Match> addMatches (@RequestBody Iterable<Match> matches) {
+        return matchService.addMatches(matches);
     }
 
     @GetMapping(path = "/all")
-    public @ResponseBody ArrayList<MatchJson> getAllMatches() {
-        //TODO: cleanup all return - create a static class of MatchUtils for all helper methods
-        Set<Match> matchSet = Sets.newHashSet(matchRepository.findAll());
-        ArrayList<MatchJson> matchArray = new ArrayList<>();
-        matchSet.parallelStream().forEach((match)->{
-            matchArray.add(new MatchJson(match.getDateTime(), match.getHomeTeam().getName(),match.getAwayTeam().getName(),match.getSport().getName(),match.getStadium().getName(),match.getStadium().getCity().getName()));
-        });
-
-        return matchArray;
+    public @ResponseBody Iterable<Match> getAllMatches() {
+        return matchService.getMatches();
     }
 
-    @PostMapping(path = "/filteredAll")
-    public @ResponseBody Iterable<Match> getFilteredMatches(
-            @RequestParam(required = false) String city,
-            @RequestParam(required = false) String sport,
-            @RequestParam(required = false) String stadium,
-            @RequestParam(required = false) String team) {
-        //TODO: Create Filter logic
-        return matchRepository.findAll();
+    @GetMapping(path = "/get/{id}")
+    public @ResponseBody Match getMatchById(@PathVariable int id){
+        return matchService.getMatchById(id);
     }
 
+    @PutMapping(path = "/update")
+    public @ResponseBody Match updateMatch(@RequestBody Match match){
+        return matchService.updateMatch(match);
+    }
+
+    @DeleteMapping(path = "/delete/{id}")
+    public @ResponseBody String deleteMatch(@PathVariable int id){
+        return matchService.deleteMatch(id);
+    }
 }

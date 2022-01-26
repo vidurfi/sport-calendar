@@ -4,16 +4,16 @@ import com.vidurfi.calendarbackend.city.City;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Stadium")
 @Table(name = "stadiums")
 public class Stadium {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "stadium_name")
     private String name;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "_city_id")
     private City city;
 

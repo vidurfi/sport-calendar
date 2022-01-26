@@ -2,11 +2,11 @@ package com.vidurfi.calendarbackend.sport;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Sport")
 @Table(name = "sports")
 public class Sport {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "sport_name")

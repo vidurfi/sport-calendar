@@ -2,28 +2,24 @@ package com.vidurfi.calendarbackend.team;
 
 import com.vidurfi.calendarbackend.city.City;
 import com.vidurfi.calendarbackend.sport.Sport;
-import com.vidurfi.calendarbackend.stadium.Stadium;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Team")
 @Table(name = "teams")
 public class Team {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "team_name")
     private String name;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "_city_id")
     private City city;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "_sport_id")
     private Sport sport;
-    @OneToOne
-    @JoinColumn(name = "_stadium_id")
-    private Stadium stadium;
 
     public Integer getId() {
         return id;
@@ -31,6 +27,14 @@ public class Team {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public City getCity() {
@@ -47,21 +51,5 @@ public class Team {
 
     public void setSport(Sport sport) {
         this.sport = sport;
-    }
-
-    public Stadium getStadium() {
-        return stadium;
-    }
-
-    public void setStadium(Stadium stadium) {
-        this.stadium = stadium;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
