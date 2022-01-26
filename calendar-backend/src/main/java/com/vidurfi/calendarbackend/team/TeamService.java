@@ -1,6 +1,5 @@
 package com.vidurfi.calendarbackend.team;
 
-import com.vidurfi.calendarbackend.stadium.Stadium;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +23,10 @@ public class TeamService {
 
     public Team getTeamById(Integer id){
         return teamRepository.findById(id).orElse(null);
+    }
+
+    public Team getTeamByName(String name){
+        return teamRepository.findByName(name);
     }
 
     public String deleteTeam(int id){

@@ -25,6 +25,10 @@ public class StadiumService {
         return stadiumRepository.findById(id).orElse(null);
     }
 
+    public Stadium getStadiumByName(String name){
+        return stadiumRepository.findByName(name);
+    }
+
     public String deleteStadium(int id){
         stadiumRepository.deleteById(id);
         return "Stadium id#" + id + " successfully deleted!";

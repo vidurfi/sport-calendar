@@ -25,6 +25,10 @@ public class CityService {
         return cityRepository.findById(id).orElse(null);
     }
 
+    public City getCityByName(String name){
+        return cityRepository.findByName(name);
+    }
+
     public String deleteCity(int id){
         cityRepository.deleteById(id);
         return "City id#" + id + " successfully deleted!";

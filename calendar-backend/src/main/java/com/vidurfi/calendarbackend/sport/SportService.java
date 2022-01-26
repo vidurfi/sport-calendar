@@ -25,6 +25,10 @@ public class SportService {
         return sportRepository.findById(id).orElse(null);
     }
 
+    public Sport getSportByName(String name){
+        return sportRepository.findByName(name);
+    }
+
     public String deleteSport(int id){
         sportRepository.deleteById(id);
         return "Sport id#" + id + " successfully deleted!";
