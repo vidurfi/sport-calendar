@@ -16,27 +16,27 @@ public class MatchController {
     }
 
     @PostMapping(path = "/addMatches")
-    public @ResponseBody Iterable<Match> addMatches (@RequestBody Iterable<Match> matches) {
+    public Iterable<Match> addMatches (@RequestBody Iterable<Match> matches) {
         return matchService.addMatches(matches);
     }
 
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<Match> getAllMatches() {
+    public Iterable<Match> getAllMatches() {
         return matchService.getMatches();
     }
 
     @GetMapping(path = "/get/{id}")
-    public @ResponseBody Match getMatchById(@PathVariable int id){
+    public Match getMatchById(@PathVariable int id){
         return matchService.getMatchById(id);
     }
 
     @PutMapping(path = "/update")
-    public @ResponseBody Match updateMatch(@RequestBody Match match){
+    public Match updateMatch(@RequestBody Match match){
         return matchService.updateMatch(match);
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public @ResponseBody String deleteMatch(@PathVariable int id){
+    public String deleteMatch(@PathVariable int id){
         return matchService.deleteMatch(id);
     }
 }
