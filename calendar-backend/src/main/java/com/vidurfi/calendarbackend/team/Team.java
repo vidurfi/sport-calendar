@@ -21,6 +21,12 @@ public class Team {
     @JoinColumn(name = "_sport_id")
     private Sport sport;
 
+    public void updateTeam(Team team){
+        this.name = team.getName();
+        this.city = team.getCity();
+        this.sport = team.getSport();
+    }
+
     public Integer getId() {
         return id;
     }

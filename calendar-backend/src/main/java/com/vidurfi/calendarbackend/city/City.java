@@ -13,6 +13,10 @@ public class City {
     @Column(name="city_name")
     private String name;
 
+    public void updateCity(City city){
+        this.name = city.getName();
+    }
+
     public Integer getId() {
         return id;
     }

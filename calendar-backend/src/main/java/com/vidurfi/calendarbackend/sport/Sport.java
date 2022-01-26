@@ -12,6 +12,10 @@ public class Sport {
     @Column(name = "sport_name")
     private String name;
 
+    public void updateSport(Sport sport){
+        this.name = sport.getName();
+    }
+
     public Integer getId() {
         return id;
     }

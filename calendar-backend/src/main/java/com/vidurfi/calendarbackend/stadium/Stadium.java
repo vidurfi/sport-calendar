@@ -17,6 +17,11 @@ public class Stadium {
     @JoinColumn(name = "_city_id")
     private City city;
 
+    public void updateStadium(Stadium stadium){
+        this.name = stadium.getName();
+        this.city = stadium.getCity();
+    }
+
     public Integer getId() {
         return id;
     }
