@@ -6,6 +6,7 @@ import com.vidurfi.calendarbackend.team.Team;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity(name = "Match")
 @Table(name = "matches")
@@ -36,6 +37,20 @@ public class Match {
         this.awayTeam = match.getAwayTeam();
         this.sport = match.getSport();
         this.stadium = match.getStadium();
+    }
+
+    public boolean isToBeKept(String teamName, String cityName, String sportName){
+        boolean toKeepTeam = true, toKeepCity = true, toKeepSport = true;
+        if (teamName != null) {
+            if (!Objects.equals(homeTeam.getName(),teamName) || Objects.equals(awayTeam.getName(), teamName)) toKeepTeam = false;
+        }
+        if (cityName != null) {
+            if (!Objects.equals(stadium.getCity().getName(), cityName)) toKeepCity = false;
+        }
+        if (sportName != null) {
+            if (!Objects.equals(sport.getName(), sportName)) toKeepSport = false;
+        }
+        return (toKeepCity && toKeepTeam && toKeepSport);
     }
 
     public Match() {

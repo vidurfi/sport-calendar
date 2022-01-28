@@ -21,8 +21,8 @@ public class MatchController {
     }
 
     @GetMapping(path = "/all")
-    public Iterable<Match> getAllMatches() {
-        return matchService.getMatches();
+    public Iterable<Match> getAllMatches(@RequestParam(value = "team", required = false) String teamName, @RequestParam(value = "city",required = false) String cityName, @RequestParam(value = "sport",required = false) String sportName) {
+        return matchService.getMatches(teamName,cityName,sportName);
     }
 
     @GetMapping(path = "/get/{id}")

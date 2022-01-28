@@ -1,7 +1,11 @@
 package com.vidurfi.calendarbackend.match;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Iterator;
 
 @Service
 public class MatchService {
@@ -17,12 +21,20 @@ public class MatchService {
         return matchRepository.saveAll(matches);
     }
 
-    public Iterable<Match> getMatches(){
-        return matchRepository.findAll();
+
+    public Iterable<Match> getMatches(String teamName, String cityName, String sportName){
+        Iterable<Match> matches = matchRepository.findAll();
+        if ((teamName == null) && (cityName == null) && (sportName == null)) return matches;
+        Iterator<Match> i = matches.iterator();
+        while (i.hasNext()){
+            Match match = i.next();
+            if (!match.isToBeKept(teamName,cityName,sportName)) i.remove();
+        }
+        return matches;
     }
 
     public Match getMatchById(Integer id){
-        return matchRepository.findById(id).orElse(null);
+        return matchRepository.findById(id).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public String deleteMatch(int id){
@@ -31,7 +43,7 @@ public class MatchService {
     }
 
     public Match updateMatch(Match match){
-        Match oldMatch = matchRepository.findById(match.getId()).orElse(null);
+        Match oldMatch = matchRepository.findById(match.getId()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND));
         oldMatch.updateMatch(match);
         return matchRepository.save(oldMatch);
     }
