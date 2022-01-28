@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `cities`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cities` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
+  `city_name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -48,12 +48,13 @@ DROP TABLE IF EXISTS `match_view`;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 /*!50001 CREATE VIEW `match_view` AS SELECT 
- 1 AS `DATE`,
- 1 AS `HOME_TEAM`,
- 1 AS `AWAY_TEAM`,
- 1 AS `CITY`,
- 1 AS `SPORT`,
- 1 AS `STADIUM`*/;
+ 1 AS `id`,
+ 1 AS `date`,
+ 1 AS `hometeam`,
+ 1 AS `awayteam`,
+ 1 AS `city`,
+ 1 AS `sport`,
+ 1 AS `stadium`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -79,7 +80,7 @@ CREATE TABLE `matches` (
   CONSTRAINT `_home_team_id_match` FOREIGN KEY (`_home_team_id`) REFERENCES `teams` (`id`),
   CONSTRAINT `_sport_id_match` FOREIGN KEY (`_sport_id`) REFERENCES `sports` (`id`),
   CONSTRAINT `_stadium_id_match` FOREIGN KEY (`_stadium_id`) REFERENCES `stadiums` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +89,7 @@ CREATE TABLE `matches` (
 
 LOCK TABLES `matches` WRITE;
 /*!40000 ALTER TABLE `matches` DISABLE KEYS */;
-INSERT INTO `matches` VALUES (1,'2022-01-08 12:30:00',1,4,2,3),(2,'2022-01-10 13:30:00',3,2,1,2),(3,'2022-01-15 16:00:00',6,5,2,1),(4,'2022-01-10 20:30:00',4,1,2,3),(5,'2022-01-20 12:00:00',4,2,2,6),(6,'2022-01-03 13:30:00',5,2,4,3),(7,'2022-02-08 15:30:00',1,4,2,4),(8,'2022-02-12 16:30:00',3,2,1,2),(9,'2022-02-13 16:00:00',6,5,2,3),(10,'2022-02-10 20:00:00',4,1,2,5),(11,'2022-02-24 18:30:00',3,2,2,6),(12,'2022-03-03 16:30:00',5,2,4,3),(13,'2022-03-08 12:30:00',1,4,2,3),(14,'2022-03-10 13:00:00',3,2,1,2),(15,'2022-03-20 16:00:00',2,4,2,6),(16,'2022-03-10 20:30:00',4,1,2,3),(17,'2022-03-20 12:00:00',3,2,2,6),(18,'2022-03-03 16:30:00',1,2,4,5);
+INSERT INTO `matches` VALUES (1,'2022-04-08 12:30:00',1,4,2,3),(2,'2022-01-10 13:30:00',3,2,1,2),(3,'2022-01-15 16:00:00',6,5,2,1),(4,'2022-01-10 20:30:00',4,1,2,3),(5,'2022-01-20 12:00:00',4,2,2,6),(6,'2022-01-03 13:30:00',5,2,4,3),(7,'2022-02-08 15:30:00',1,4,2,4),(8,'2022-02-12 16:30:00',3,2,1,2),(9,'2022-02-13 16:00:00',6,5,2,3),(11,'2022-02-24 18:30:00',3,2,2,6),(12,'2022-03-03 16:30:00',5,2,4,3),(13,'2022-03-08 12:30:00',1,4,2,3),(14,'2022-03-10 13:00:00',3,2,1,2),(15,'2022-03-20 16:00:00',2,4,2,6),(16,'2022-03-10 20:30:00',4,1,2,3),(17,'2022-03-20 12:00:00',3,2,2,6),(18,'2022-03-03 16:30:00',1,2,4,5),(19,'2022-02-01 12:00:00',5,2,3,4),(20,'2022-04-08 12:30:00',2,4,2,3);
 /*!40000 ALTER TABLE `matches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,7 +102,7 @@ DROP TABLE IF EXISTS `sports`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sports` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `sport_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -125,7 +126,7 @@ DROP TABLE IF EXISTS `stadiums`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `stadiums` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `stadium_name` varchar(255) DEFAULT NULL,
   `_city_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `_city_id_idx` (`_city_id`),
@@ -139,7 +140,7 @@ CREATE TABLE `stadiums` (
 
 LOCK TABLES `stadiums` WRITE;
 /*!40000 ALTER TABLE `stadiums` DISABLE KEYS */;
-INSERT INTO `stadiums` VALUES (1,'Puskas Arena',3),(2,'Duna Arena',3),(3,'Allianz-Stadion',1),(4,'Strahov Stadium',4),(5,'Tehelne pole',2),(6,'Stadion Narodowy',5),(7,'Olympiastadion',6);
+INSERT INTO `stadiums` VALUES (1,'Pusk├ís Ar├⌐na',3),(2,'Duna Ar├⌐na',3),(3,'Allianz-Stadion',1),(4,'Strahov Stadium',4),(5,'Teheln├⌐ pole',2),(6,'Stadion Narodowy',5),(7,'Olympiastadion',6);
 /*!40000 ALTER TABLE `stadiums` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +153,7 @@ DROP TABLE IF EXISTS `teams`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `teams` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `team_name` varchar(255) NOT NULL,
   `_city_id` int NOT NULL,
   `_stadium_id` int DEFAULT NULL,
   `_sport_id` int NOT NULL,
@@ -189,7 +190,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `match_view` AS select `m`.`date` AS `DATE`,`t1`.`name` AS `HOME_TEAM`,`t2`.`name` AS `AWAY_TEAM`,`c`.`name` AS `CITY`,`sp`.`name` AS `SPORT`,`st`.`name` AS `STADIUM` from (((((`matches` `m` left join `teams` `t1` on((`m`.`_home_team_id` = `t1`.`id`))) left join `teams` `t2` on((`m`.`_away_team_id` = `t2`.`id`))) left join `stadiums` `st` on((`m`.`_stadium_id` = `st`.`id`))) left join `sports` `sp` on((`m`.`_sport_id` = `sp`.`id`))) join `cities` `c` on((`st`.`_city_id` = `c`.`id`))) */;
+/*!50001 VIEW `match_view` AS select `m`.`id` AS `id`,`m`.`date` AS `date`,`t1`.`team_name` AS `hometeam`,`t2`.`team_name` AS `awayteam`,`c`.`city_name` AS `city`,`sp`.`sport_name` AS `sport`,`st`.`stadium_name` AS `stadium` from (((((`matches` `m` left join `teams` `t1` on((`m`.`_home_team_id` = `t1`.`id`))) left join `teams` `t2` on((`m`.`_away_team_id` = `t2`.`id`))) left join `stadiums` `st` on((`m`.`_stadium_id` = `st`.`id`))) left join `sports` `sp` on((`m`.`_sport_id` = `sp`.`id`))) join `cities` `c` on((`st`.`_city_id` = `c`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -203,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-06 22:20:33
+-- Dump completed on 2022-01-28 10:30:41
