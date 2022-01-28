@@ -1,7 +1,9 @@
 package com.vidurfi.calendarbackend.city;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class CityService {
@@ -22,8 +24,7 @@ public class CityService {
     }
 
     public City getCityById(Integer id){
-        return cityRepository.findById(id).orElse(null);
-    }
+        return cityRepository.findById(id).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NO_CONTENT));}
 
     public City getCityByName(String name){
         return cityRepository.findByName(name);
@@ -35,7 +36,7 @@ public class CityService {
     }
 
     public City updateCity(City city){
-        City oldCity = cityRepository.findById(city.getId()).orElse(null);
+        City oldCity = cityRepository.findById(city.getId()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NO_CONTENT));
         oldCity.updateCity(city);
         return cityRepository.save(oldCity);
     }

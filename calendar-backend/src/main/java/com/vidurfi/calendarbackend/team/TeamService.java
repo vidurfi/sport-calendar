@@ -1,7 +1,9 @@
 package com.vidurfi.calendarbackend.team;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class TeamService {
@@ -22,7 +24,7 @@ public class TeamService {
     }
 
     public Team getTeamById(Integer id){
-        return teamRepository.findById(id).orElse(null);
+        return teamRepository.findById(id).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NO_CONTENT));
     }
 
     public Team getTeamByName(String name){
@@ -35,7 +37,7 @@ public class TeamService {
     }
 
     public Team updateTeam(Team team){
-        Team oldTeam = teamRepository.findById(team.getId()).orElse(null);
+        Team oldTeam = teamRepository.findById(team.getId()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NO_CONTENT));
         oldTeam.updateTeam(team);
         return teamRepository.save(oldTeam);
     }

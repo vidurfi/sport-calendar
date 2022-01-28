@@ -34,7 +34,7 @@ public class MatchService {
     }
 
     public Match getMatchById(Integer id){
-        return matchRepository.findById(id).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return matchRepository.findById(id).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NO_CONTENT));
     }
 
     public String deleteMatch(int id){
@@ -43,7 +43,7 @@ public class MatchService {
     }
 
     public Match updateMatch(Match match){
-        Match oldMatch = matchRepository.findById(match.getId()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Match oldMatch = matchRepository.findById(match.getId()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NO_CONTENT));
         oldMatch.updateMatch(match);
         return matchRepository.save(oldMatch);
     }

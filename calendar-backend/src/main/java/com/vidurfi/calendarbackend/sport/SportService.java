@@ -1,7 +1,9 @@
 package com.vidurfi.calendarbackend.sport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class SportService {
@@ -22,7 +24,7 @@ public class SportService {
     }
 
     public Sport getSportById(Integer id){
-        return sportRepository.findById(id).orElse(null);
+        return sportRepository.findById(id).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NO_CONTENT));
     }
 
     public Sport getSportByName(String name){
@@ -35,7 +37,7 @@ public class SportService {
     }
 
     public Sport updateSport(Sport sport){
-        Sport oldSport = sportRepository.findById(sport.getId()).orElse(null);
+        Sport oldSport = sportRepository.findById(sport.getId()).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NO_CONTENT));
         oldSport.updateSport(sport);
         return sportRepository.save(oldSport);
     }
