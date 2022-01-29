@@ -5,31 +5,31 @@ import { decrementMonth, incrementMonth, setFilters } from './frontend';
 function App() {
   return (
     <div>
-    <div>
-      <div className="content title">SportCalendar</div>
-      <div className="content subtitle year">2022</div>
+      <div>
+        <div className="content title">SportCalendar</div>
+        <div className="content subtitle year">2022</div>
+        <div className="content">
+            <button onClick={()=>decrementMonth()}>{String.fromCharCode(8592)}</button>
+          <div className="subtitle inline month">1</div>
+            <button onClick={()=>incrementMonth()}>{String.fromCharCode(8594)}</button>
+        </div>
+      </div>
       <div className="content">
-          <button onClick={()=>decrementMonth()}>{String.fromCharCode(8592)}</button>
-        <div className="subtitle inline month">1</div>
-          <button onClick={()=>incrementMonth()}>{String.fromCharCode(8594)}</button>
-      </div>
-    </div>
-    <div className="content">
-      <div className="content filtercontrols inline">
-        <div className="inline">
-          City
-          <input id="cityFilterInput" className="inline" type="text"/>
+        <div className="content filtercontrols inline">
+          <div className="inline">
+            City
+            <input id="cityFilterInput" className="inline" type="text"/>
+          </div>
+          <div className="inline">
+            Sport
+            <input id="sportFilterInput" type="text"/>
+          </div>
+          <div className="inline">
+            Team
+            <input id="teamFilterInput" type="text"/>
+          </div>
+            <button onClick={()=>setFilters()}>Set filters</button>
         </div>
-        <div className="inline">
-          Sport
-          <input id="sportFilterInput" type="text"/>
-        </div>
-        <div className="inline">
-          Team
-          <input id="teamFilterInput" type="text"/>
-        </div>
-          <button onClick={()=>setFilters()}>Set filters</button>
-      </div>
     </div>
       <table id="calendar" className="calendar" onLoad={useEffect(()=>{setFilters()})}>
         <thead>
