@@ -132,7 +132,8 @@ function AddControl({ handleDayChange }) {
     item.dateTime = dateValue;
     setMatchState(item);
     axios.post('http://localhost:8080/matches/addMatch', matchState).then((response) => {
-      if (response.status !== 200) console.log(response.status);
+      // eslint-disable-next-line no-console
+      if (response.status !== 200) console.warn(response.status);
       else handleDayChange();
     });
   };
