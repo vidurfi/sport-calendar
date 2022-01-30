@@ -3,20 +3,37 @@ import PropTypes from 'prop-types';
 import AddControl from './AddControl';
 import FilterControl from './FilterControl';
 
-function Controls({ localDate }) {
+function Controls({
+  handleDayChange, handleFilterChange, params,
+}) {
   return (
     <div>
-      <FilterControl />
-      <AddControl />
+      <FilterControl
+        handleDayChange={handleDayChange}
+        handleFilterChange={handleFilterChange}
+        params={params}
+      />
+      <AddControl handleDayChange={handleDayChange} />
     </div>
   );
 }
 
 Controls.propTypes = {
-  localDate: PropTypes.shape({
-    year: PropTypes.number.isRequired,
-    month: PropTypes.number.isRequired,
-  }).isRequired,
+  handleFilterChange: PropTypes.func.isRequired,
+  handleDayChange: PropTypes.func.isRequired,
+  params: PropTypes.shape({
+    team: PropTypes.string,
+    city: PropTypes.string,
+    sport: PropTypes.string,
+  }),
+};
+
+Controls.defaultProps = {
+  params: {
+    team: null,
+    city: null,
+    sport: null,
+  },
 };
 
 export default Controls;

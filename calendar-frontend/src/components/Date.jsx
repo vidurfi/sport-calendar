@@ -7,7 +7,7 @@ function Date({ localDate }) {
     <div className="inline">
       <div className="content subtitle">{localDate.year}</div>
       {' '}
-      <div className="content month">{Object.keys(MONTH)[localDate.month - 1]}</div>
+      <div className="content month">{Object.keys(MONTH)[localDate.month]}</div>
     </div>
   );
 }

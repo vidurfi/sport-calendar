@@ -8,7 +8,7 @@ function DateControl({
 }) {
   return (
     <div className="content">
-      <Button text="<" onClick={() => decrementMonth()} />
+      <Button text="<" onClick={decrementMonth} />
       <Date localDate={localDate} />
       <Button text=">" onClick={incrementMonth} />
     </div>
